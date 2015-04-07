@@ -1,0 +1,114 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1">
+  <title>Er der Tjenestepistol på lørdag?</title>
+  <script>
+
+    var days_of_pratice = [1, 3, 5];
+    var today = new Date();
+    //today.setDate(today.getDate() + 1111);
+    var week_number = 0;
+    // Find next saturday.
+    var next_saturday = new Date(today);
+    next_saturday.setDate(today.getDate() + 6 - today.getDay());
+    // Reset to first day in the month.
+    var saturdays_in_month = new Date(next_saturday);
+    saturdays_in_month.setDate(1);
+    // Find the first saturday in the month.
+    saturdays_in_month.setDate(saturdays_in_month.getDate() + 6 - saturdays_in_month.getDay());
+    // Loop through all days in the month and find all saturdays.
+    while (next_saturday.getMonth() == saturdays_in_month.getMonth()) {
+      // Collect saturdays.
+      week_number++;
+      // When we find the saturday, break the loop, no need to find more.
+      if (next_saturday.getDate() == saturdays_in_month.getDate()) break;
+      // Advance to next saturday.
+      saturdays_in_month.setDate(saturdays_in_month.getDate() + 7);
+    }
+    // Check if the saturday exist in the array.
+    (days_of_pratice.indexOf(week_number) !== -1) ? result = 'Ja' : result = 'Nej';
+
+    function updateFields() {
+      document.getElementById('date').innerHTML = '' + next_saturday.getDate() + ' / ' + (next_saturday.getMonth() + 1) + ' - ' + next_saturday.getFullYear();
+      document.getElementById('result').innerHTML = '&nbsp;';
+
+    }
+    var count = 0;
+
+
+    var timer = setInterval(updateResult, 400);
+
+    function updateResult() {
+
+      var out = '. ';
+      for (i=0; i < count; i++) {
+        out += '. ';
+      }
+      count++;
+      if (count == 6) {
+        clearInterval(timer);
+        out = result;
+        if ( result == 'Ja') {
+          document.getElementById('signup').innerHTML = 'Tilmelding er et krav og skal på plads senest om onsdagen til Troels Lenda. Det er yderligere krav at man er bekendt med <a id="open_explanation" href="#">reglerne</a>.';
+          document.getElementById('open_explanation').onclick=function(){
+            document.getElementById('explained').style.display = 'block';
+          }
+        }
+      }
+      document.getElementById('result').innerHTML = out;
+    }
+    window.onload = updateFields;
+
+
+
+  </script>
+  <style type="text/css">
+    body {
+      text-align: center;
+    }
+    #explained {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Er der Tjeneste pistol på lørdag?</h1>
+<h2 id="date"></h2>
+<h2 id="result"></h2>
+<p>Der skydes Tjenestepistol den første, trejde og femte lørdag i måneden på afsnit C på Københavns skyttecenter fra kl 09-10.</p>
+<p id="signup"></p>
+
+
+<div id="explained">
+  <h1>Regler</h1>
+
+  <h3>Indkøb af ammunition</h3>
+  <p>Ammunition handles som det første i boksen. Husk at have lige penge med. 120kr for en TJ pist serie eller 2kr pr patron.</p>
+
+  <h3>Forberedelse</h3>
+  <p>Inden start hjælpes alle med at finde skiveholdere og skiver frem. 2 skiver på hver skiveholder. Kontroller at skiverne er plasterede. De 2 borde placeres på 12.5m og grønne måtter ligges på.</p>
+
+  <h3>Klargøring</h3>
+  <p>Sørg for ikke at efterlade magasinerne på bordet ved standpladsen, medmindre du har magasiner nok opladt til at skyde alle serier. På den måde kan man lade op mens de andre skyder. Der må nemlig ikke være nogen ved standplads bordet, når skytterne er nede ved skiverne og markere. Hvis der ikke er andre der lader op i magasinerne ved start, er det fordi det allerede er gjort hjemmefra.</p>
+
+  <h3>Skydning</h3>
+  <p>Alle 3 duel serier skydes lige efter hinanden. Der markeres først herefter. Alle skytter skyder for så vidt muligt duel skydningen samtidigt i hver deres skive par.</p>
+  <p>Alle 3 tempo serier skydes lige efter hinanden. Der markeres først herefter. En skytte pr standplads ad gangen.</p>
+
+  <h3>Scoring og plastring</h3>
+  <p>Hvis man selv har skudt, scorer man sine skiver på sin smartphone, eller anden registrering. En anden følger efter og plastrer. Hvis ikke man er interesseret i at score, så plaster man selv. Når vi skyder Duel, skal der skønnes om man plastrer eller indsætter en indstiksskive. Hvis alle, eller størstedelen af skudene kan dækkes af indstik, indsættes en sådanne.</p>
+
+  <h3>Sikkerhed</h3>
+  <p>Pistolen ligger ALTID på standpladsen med slæden trukket når man ikke skyder med den. Find, køb eller lån et par sikkerhedsbriller. Høreværn lånes derude.</p>
+
+  <h3>Oprydning</h3>
+  <p>Skiveholdere nedtages, skiver plastres og samles sammen til brug igen. De smides ikke ud. Bordene returneres og al afskudte hylstre opsamles.</p>
+
+  <p><strong>Sidst men ikke mindst er det forventet at du kender programmet DSF skydeprogrammet <a href="http://trogels.com/post/54104913185">tjenestepistol</a></strong></p>
+
+  <p><i>Vi plejer at gå hurtigt igang og skyde duel serierne og så holde en lille pause med snak i 5min inden tempo. Det vigtigste er bare at være klar, når det er ens tur til at skyde og ikke først skal til at lade magasinerne :)</i></p>
+
+</div>
